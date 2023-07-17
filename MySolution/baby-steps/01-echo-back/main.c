@@ -54,7 +54,9 @@ int receive_and_send(int client_recvfd, int client_sendfd, struct log_manager *l
 	}
 
 	/* TODO: if we receive a string different from the commads above write it in a file */
-	
+	else if (log_manager->enabled){
+		write(log_manager->fd, buf, strlen(buf));
+	}
 
 	return bytes_received;
 }
@@ -66,11 +68,14 @@ int main(int argc, char* argv[])
 	struct sockaddr_in serv_addr;
 
 	/* TODO bonus: declare a log manager*/
+	struct log_manager *manager;
 
 	/* TODO: open socket fd; */
 	/* listen_fd = ... */
+	listen_fd = socket(AF_INET, SOCK_STREAM, 0);
 
 	/* TODO bonus: create a log_manager structure */
+	manager = create_manager();
 
 	if (listen_fd < 0) {
 		fprintf(stderr, "socket");
@@ -89,6 +94,7 @@ int main(int argc, char* argv[])
 
 	/* TODO: bind() the socket; */
 	/* err =  ... */
+	err = bind(listen_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
 
 	if (err < 0) {
 		fprintf(stderr, "bind");
@@ -103,8 +109,13 @@ int main(int argc, char* argv[])
 
 	listen(listen_fd, 1);
 
+	printf("Listening on port %d...\n", LISTEN_PORT);
+
 	/* TODO: accept() new connection; */
 	/* conn_fd = ... */
+	conn_fd = accept(listen_fd, (struct sockaddr *) &client_addr, &socket_len);
+
+	printf("Connect success!\n");
 
 	if (conn_fd < 0) {
 		fprintf(stderr, "conn_fd accept");
@@ -113,12 +124,15 @@ int main(int argc, char* argv[])
 
 	do {
 		/* TODO bonus: add a log_manager as argument of this function */
-		bytes_received = receive_and_send(conn_fd, conn_fd);
+		bytes_received = receive_and_send(conn_fd, conn_fd, manager);
 	} while (bytes_received > 0);
 
 	/* TODO: close file descriptors */
+	close(conn_fd);
+	close(listen_fd);
 
 	/* TODO bonus: destroy the log manager */
+	destroy_manager(manager);
 
 	return 0;
 }
