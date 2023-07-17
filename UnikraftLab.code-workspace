@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "docs/content/en/community/hackathons/sessions"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"socket.h": "c",
+			"inet.h": "c"
+		}
+	}
+}

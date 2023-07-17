@@ -1,0 +1,3 @@
+$(eval $(call addlib,mount9pfs))
+
+MOUNT9PFS_SRCS-y += $(MOUNT9PFS_BASE)/main.c

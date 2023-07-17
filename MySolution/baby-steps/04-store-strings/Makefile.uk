@@ -1,0 +1,3 @@
+$(eval $(call addlib,storestrings))
+
+STORESTRINGS_SRCS-y += $(STORESTRINGS_BASE)/main.c
