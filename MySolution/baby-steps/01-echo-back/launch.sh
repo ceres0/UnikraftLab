@@ -14,13 +14,10 @@ echo "Creating bridge $BRIDGE_IFACE with IP address $BRIDGE_IP ..."
 sudo brctl addbr "$BRIDGE_IFACE" || true
 sudo ifconfig "$BRIDGE_IFACE" "$BRIDGE_IP"
 
+
 # TODO bonus: add a filesystem
 fs_tag="fs0"
 local_fs_dir="./guest_fs/"
-
-if [ ! -d "$local_fs_dir" ];then
-    mkdir "$local_fs_dir"
-fi
 
 echo "Starting KVM image connected to bridge interface $BRIDGE_IFACE ..."
 sudo /usr/bin/qemu-system-x86_64 -netdev bridge,id=en0,br=virbr0 \

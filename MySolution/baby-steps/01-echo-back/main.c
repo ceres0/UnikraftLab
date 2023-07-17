@@ -109,13 +109,13 @@ int main(int argc, char* argv[])
 
 	listen(listen_fd, 1);
 
-	printf("Listening on port %d...\n", LISTEN_PORT);
+	// printf("Listening on port %d...\n", LISTEN_PORT);
 
 	/* TODO: accept() new connection; */
 	/* conn_fd = ... */
 	conn_fd = accept(listen_fd, (struct sockaddr *) &client_addr, &socket_len);
 
-	printf("Connect success!\n");
+	// printf("Connect success!\n");
 
 	if (conn_fd < 0) {
 		fprintf(stderr, "conn_fd accept");
