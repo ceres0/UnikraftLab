@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <errno.h>
 
+#include <fcntl.h>
+#include <sys/stat.h>
+
 #define BUFLEN 100
 #define LISTEN_PORT 1234
 
@@ -23,8 +26,9 @@ int receive_and_send(int file_fd, int client_recvfd, int client_sendfd)
 	}
 
     // TODO: write to file before echoing back
-
+	write(file_fd, buf, bytes_received);
     // TODO: apply rot13
+	rot13(buf);
 
 	bytes_send = send(client_sendfd, buf, BUFLEN, 0);
 	if (bytes_send < 0) {
@@ -41,7 +45,7 @@ int main(int argc, char* argv[])
 	struct sockaddr_in serv_addr;
 
 	// TODO: open() the file you want to store the strings in;
-	int file_fd =
+	int file_fd = open("my_strings.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
 	if (file_fd < 0) {
 		perror("socket");
@@ -94,6 +98,7 @@ int main(int argc, char* argv[])
 	close(listen_fd);
 
     // TODO: close() file_fd
+	close(file_fd);
 
 	return 0;
 }
