@@ -1,6 +1,6 @@
 UK_ROOT ?= $(PWD)/../../unikraft
 UK_LIBS ?= $(PWD)/../../libs
-LIBS :=
+LIBS := $(UK_LIBS)/musl:$(UK_LIBS)/lwip
 
 all:
 	@$(MAKE) -C $(UK_ROOT) A=$(PWD) L=$(LIBS)
