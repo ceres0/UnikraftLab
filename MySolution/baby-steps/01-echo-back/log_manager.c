@@ -80,7 +80,8 @@ struct log_manager *create_manager()
 
    manager->enabled = 1;
    manager->fd = open(LOG_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-   if (manager->fd == -1){
+   // manager->fd = open(LOG_FILE, O_RDWR | O_CREAT | O_APPEND, 0644);
+   if (!manager->fd){
       free(manager);
       return NULL;
    }
