@@ -67,7 +67,7 @@ struct log_manager *create_manager()
 {
    /* TODO bonus */
    static int created = 0;
-   struct log_manager *manager = NULL;
+   static struct log_manager *manager = NULL;
 
    if (created){
       return manager;
