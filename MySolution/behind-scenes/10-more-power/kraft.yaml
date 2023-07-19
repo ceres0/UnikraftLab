@@ -1,0 +1,13 @@
+---
+specification: '0.5'
+name: app-helloworld
+unikraft:
+  version: staging
+targets:
+  - architecture: x86_64
+    platform: kvm
+libraries:
+  newlib:
+    version: staging
+    kconfig:
+      - CONFIG_LIBNEWLIBC=y
