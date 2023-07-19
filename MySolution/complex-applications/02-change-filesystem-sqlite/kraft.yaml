@@ -1,0 +1,32 @@
+---
+specification: '0.5'
+name: sqlite
+unikraft:
+  version: stable
+  kconfig:
+    - CONFIG_LIBUK9P=y
+    - CONFIG_LIB9PFS=y
+    - CONFIG_LIBDEVFS=y
+    - CONFIG_LIBDEVFS_AUTOMOUNT=y
+    - CONFIG_LIBVFSCORE_AUTOMOUNT_ROOTFS=y
+    - CONFIG_LIBVFSCORE_ROOTFS_9PFS=y
+    - CONFIG_LIBUKLIBPARAM=y
+    - CONFIG_LIBVFSCORE_ROOTDEV="fs0"
+    - CONFIG_LIBUKMMAP=y
+    - CONFIG_LIBPOSIX_SYSINFO=y
+targets:
+  - architecture: x86_64
+    platform: kvm
+  - architecture: arm64
+    platform: kvm
+libraries:
+  musl:
+    version: stable
+  sqlite:
+    version: stable
+    kconfig:
+      - CONFIG_LIBSQLITE_MAIN_FUNCTION=y
+volumes:
+  fs0:
+    driver: 9pfs
+    source: minrootfs.tgz
