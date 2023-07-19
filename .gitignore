@@ -1,2 +1,4 @@
 .unikraft
 .vscode
+**/build/
+**/.config.old
