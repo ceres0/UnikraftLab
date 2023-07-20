@@ -1,0 +1,42 @@
+<domain type='kvm'>
+    <name>storestrings</name>
+    <memory unit="Mib">20</memory>
+    <vcpu>1</vcpu>
+    <os>
+        <type arch='x86_64'>hvm</type>
+        <kernel>/home/ceres/CodingRepository/UnikraftLab/libvirtdir/storestrings/store-strings_qemu-x86_64</kernel>
+        <cmdline>
+            <arg>netdev.ipv4_addr=172.44.0.2 </arg>
+            <arg>netdev.ipv4_gw_addr=172.44.0.1 </arg>
+            <arg>netdev.ipv4_subnet_mask=255.255.255.0 --</arg>
+        </cmdline>
+    </os>
+
+    <clock offset='utc'/>
+    <on_poweroff>destroy</on_poweroff>
+    <on_reboot>restart</on_reboot>
+    <on_crash>restart</on_crash>
+
+    <devices>
+        <interface type='bridge'>
+            <source bridge='virbr0'/>
+            <model type='virtio'/>
+            <alias name='net0'/>
+        </interface>
+        <filesystem type='mount' accessmode='passthrough'>
+            <source dir='/home/ceres/CodingRepository/UnikraftLab/libvirtdir/storestrings/fs0'/>
+            <target dir='rootfs'/>
+        </filesystem>
+        <serial type='pty'>
+            <source path='/dev/pts/20'/>
+            <target port='0'/>
+            <alias name='serial0'/>
+        </serial>
+        <console type='pty' tty='/dev/pts/20'>
+            <source path='/dev/pts/20'/>
+            <target type='serial' port='0'/>
+            <alias name='serial0'/>
+        </console>
+        <graphics port="-1" type="vnc" />
+    </devices>
+</domain> 
